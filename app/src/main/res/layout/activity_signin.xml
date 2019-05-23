@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.SignInActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/rl_signinlogo"
+            >
+
+            <ImageView
+                android:layout_width="230dp"
+                android:layout_height="70dp"
+                android:layout_margin="15dp"
+                android:id="@+id/signIn_logo"
+
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toEndOf="@id/signIn_logo"
+                android:layout_marginTop="35dp"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_below="@id/rl_signinlogo"
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/welcomebacktxt"
+                android:fontFamily="@font/raleway_semibold"
+                android:textSize="20sp"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:text="Welcome to Book App"
+                android:layout_margin="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welcomebacktxt"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/textColor"
+
+                android:id="@+id/sigin_emailtext"
+                android:fontFamily="@font/raleway"
+                android:text="Email" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sigin_emailtext"
+                android:id="@+id/rl_signinnumber"
+                android:layout_margin="20dp"
+                android:padding="0dp"
+                >
+
+
+            </RelativeLayout>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:hint="Please enter your email"
+                android:inputType="textEmailAddress"
+                android:visibility="visible"
+                android:fontFamily="@font/raleway"
+                android:textSize="14sp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/sigin_edit_email"
+                android:layout_below="@+id/sigin_emailtext"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sigin_edit_email"
+                android:layout_marginStart="30dp"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+
+                android:layout_marginEnd="20dp"
+                android:id="@+id/sigin_passwordtext"
+                android:fontFamily="@font/raleway"
+                android:text="Password" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/signIn_edit_pass"
+                android:layout_marginStart="30dp"
+                android:inputType="textPassword"
+                android:hint="Please enter your password"
+                android:textSize="14sp"
+                android:fontFamily="@font/raleway"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@+id/sigin_passwordtext"
+                />
+
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Sign in"
+                android:fontFamily="@font/raleway_semibold"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:textColor="@color/whitecolor"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/signIn_btn"
+                android:layout_below="@+id/signIn_edit_pass"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/signIn_btn"
+                android:layout_marginStart="30dp"
+                android:id="@+id/signin_alreadyaccount_text"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/raleway"
+                android:text="Dont have an account?"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/signIn_btn"
+                android:layout_marginStart="20dp"
+                android:id="@+id/signIn_signupbtn"
+                android:textColor="@color/textColor"
+                android:text="Sign up"
+                android:layout_marginBottom="20dp"
+                android:onClick="signupClicked"
+                android:fontFamily="@font/raleway_semibold"
+                android:layout_toEndOf="@+id/signin_alreadyaccount_text"
+
+                />
+
+
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
