@@ -1,9 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.SignUpActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_signUplogo"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="230dp"
+                android:layout_height="70dp"
+                android:layout_margin="15dp"
+                android:id="@+id/signUp_logo"
+
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toEndOf="@id/signUp_logo"
+                android:id="@+id/signUp_ImgCross"
+                android:layout_marginTop="35dp"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_signUplogo"
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/createAccountxt"
+                android:fontFamily="@font/raleway_semibold"
+                android:textSize="20sp"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:text="Create a book app acount"
+                android:layout_margin="20dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/createAccountxt"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/sigup_fullNametext"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/raleway"
+                android:text="Full Name" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:hint="Please enter your full name"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/sigup_edit_fullName"
+                android:layout_below="@+id/sigup_fullNametext" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sigup_edit_fullName"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/textColor"
+                android:id="@+id/sigup_text_Email"
+                android:fontFamily="@font/raleway"
+                android:text="Email" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/signUp_edit_Email"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="20dp"
+                android:inputType="textEmailAddress"
+                android:hint="Please enter your email"
+                android:textSize="14sp"
+                android:layout_below="@+id/sigup_text_Email" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/signUp_edit_Email"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/textColor"
+                android:id="@+id/sigup_text_Password"
+                android:fontFamily="@font/raleway"
+                android:text="Password" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/signUp_edit_Password"
+                android:inputType="textPassword"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="20dp"
+                android:hint="Please Enter your password"
+                android:textSize="14sp"
+                android:layout_below="@+id/sigup_text_Password" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Sign Up"
+                android:textColor="@color/whitecolor"
+                android:fontFamily="@font/raleway_semibold"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:id="@+id/signUp_btn"
+                android:background="@color/colorPrimaryDark"
+                android:layout_below="@+id/signUp_edit_Password" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/signUp_btn"
+                android:layout_marginStart="30dp"
+                android:id="@+id/signUp_alreadyaccount_text"
+                android:textSize="14sp"
+                android:textColor="@color/textColor"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/raleway"
+                android:text="Already have an account?"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/signUp_btn"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/textColor"
+                android:id="@+id/signup_signInbtn"
+                android:text="Sign In"
+                android:onClick="signinclicked"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/raleway_semibold"
+                android:layout_toEndOf="@+id/signUp_alreadyaccount_text"
+
+                />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</ScrollView>
