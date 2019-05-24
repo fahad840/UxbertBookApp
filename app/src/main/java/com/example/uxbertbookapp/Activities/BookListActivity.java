@@ -45,6 +45,7 @@ public class BookListActivity extends AppCompatActivity {
                             case R.id.action_new:
                                 fm.beginTransaction().hide(active).show(fragment1).commit();
                                 active = fragment1;
+
                                 return  true;
                             case R.id.action_old:
                                 fm.beginTransaction().hide(active).show(fragment2).commit();

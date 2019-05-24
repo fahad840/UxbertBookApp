@@ -61,9 +61,13 @@ public class UpcomingFragment extends Fragment {
     {
         dbHandler=new DBHandler(getActivity());
         bookArrayList = new ArrayList<>();
-        bookArrayList.addAll(dbHandler.getUpcomingBooks());
-        bookAdapter= new BookAdapter(getActivity(),bookArrayList);
-        listView.setAdapter(bookAdapter);
+        if (dbHandler.getUpcomingBooks()!=null)
+        {
+            bookArrayList.addAll(dbHandler.getUpcomingBooks());
+            bookAdapter= new BookAdapter(getActivity(),bookArrayList);
+            listView.setAdapter(bookAdapter);
+        }
+
 
     }
 

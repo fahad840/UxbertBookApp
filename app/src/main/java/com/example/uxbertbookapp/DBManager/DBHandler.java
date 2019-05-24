@@ -104,23 +104,28 @@ public class DBHandler extends SQLiteOpenHelper {
         List<Book> bookList = new ArrayList<Book>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_BOOKS;
-
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.query(TABLE_BOOKS, new String[]{BOOK_ID,
+                        BOOK_NAME, BOOK_AURTHOR, BOOK_PAGES, BOOK_STATUS, BOOK_NOTIFIABLE}, BOOK_STATUS + "=?",
+                new String[]{"new"}, null, null, null, null);
 
         // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Book book = new Book();
-                book.setId(Integer.parseInt(cursor.getString(0)));
-                book.setName(cursor.getString(1));
-                book.setAurthor(cursor.getString(2));
-                book.setPages(Integer.valueOf(cursor.getString(3)));
-                book.setStatus(cursor.getString(4));
-                book.setNotifiable(Integer.valueOf(cursor.getString(5)));
-                // Adding book to list
-                bookList.add(book);
-            } while (cursor.moveToNext());
+        if (cursor.getCount() <= 0) {
+            return null;
+        } else {
+            if (cursor.moveToFirst()) {
+                do {
+                    Book book = new Book();
+                    book.setId(Integer.parseInt(cursor.getString(0)));
+                    book.setName(cursor.getString(1));
+                    book.setAurthor(cursor.getString(2));
+                    book.setPages(Integer.valueOf(cursor.getString(3)));
+                    book.setStatus(cursor.getString(4));
+                    book.setNotifiable(Integer.valueOf(cursor.getString(5)));
+                    // Adding book to list
+                    bookList.add(book);
+                } while (cursor.moveToNext());
+            }
         }
 
         // return book list
@@ -212,6 +217,17 @@ public class DBHandler extends SQLiteOpenHelper {
         db.delete(TABLE_BOOKS, BOOK_ID + " = ?",
                 new String[]{String.valueOf(book.getId())});
         db.close();
+    }
+
+
+    public int relaseBook(Book book) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(BOOK_STATUS, book.getStatus());
+        // updating row
+        return db.update(TABLE_BOOKS, values, BOOK_ID + " = ?",
+                new String[]{String.valueOf(book.getId())});
     }
 
     // Getting book Count

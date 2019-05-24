@@ -97,7 +97,7 @@ public class CreateBookActivity extends BaseSkeletonActivity implements com.mobs
         dbHandler.addBook(new Book(ed_bookname.getText().toString(),ed_bookaurthor.getText().toString(),Integer.valueOf(ed_bookpages.getText().toString()),"upcoming",check));
         Toast.makeText(getApplicationContext(),"Book added in upcoming",Toast.LENGTH_LONG).show();
         finish();
-
+        startActivity(new Intent(CreateBookActivity.this,BookListActivity.class));
 
     }
 }

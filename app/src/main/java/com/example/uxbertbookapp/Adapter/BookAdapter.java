@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.uxbertbookapp.Activities.BookListActivity;
+import com.example.uxbertbookapp.Activities.EditBookActivity;
+import com.example.uxbertbookapp.DBManager.DBHandler;
 import com.example.uxbertbookapp.Model.Book;
 import com.example.uxbertbookapp.R;
 
@@ -29,6 +31,7 @@ public class BookAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Book> list;
+    private DBHandler dbHandler;
 
     public BookAdapter(Context context, ArrayList<Book> list) {
         this.context = context;
@@ -92,9 +95,9 @@ public class BookAdapter extends BaseAdapter {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-//              Intent intent =new Intent(context, SubCategoryActivity.class);
-//              intent.putExtra("catId",item.getId().toString());
-//              context.startActivity(intent);
+              Intent intent =new Intent(context, EditBookActivity.class);
+              intent.putExtra("bookId",item.getId());
+              context.startActivity(intent);
           }
         });
 
@@ -102,38 +105,43 @@ public class BookAdapter extends BaseAdapter {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-
-                final String NOTIFICATION_CHANNEL_ID = "4565";
+                dbHandler=new DBHandler(context);
+                item.setStatus("new");
+                dbHandler.relaseBook(item);
+                context.startActivity(new Intent(context,BookListActivity.class));
+                if (item.getNotifiable() == 1) {
+                    final String NOTIFICATION_CHANNEL_ID = "4565";
 //Notification Channel
-                CharSequence channelName = "Uxbert";
-                int importance = NotificationManager.IMPORTANCE_LOW;
-                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "any", importance);
-                notificationChannel.enableLights(true);
-                notificationChannel.setLightColor(Color.RED);
-                notificationChannel.enableVibration(true);
-                notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                    CharSequence channelName = "Uxbert";
+                    int importance = NotificationManager.IMPORTANCE_LOW;
+                    NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "any", importance);
+                    notificationChannel.enableLights(true);
+                    notificationChannel.setLightColor(Color.RED);
+                    notificationChannel.enableVibration(true);
+                    notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
 
-                Intent intent = new Intent(context, BookListActivity.class);
-                PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    Intent intent = new Intent(context, BookListActivity.class);
+                    PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                NotificationCompat.Builder b = new NotificationCompat.Builder(context);
+                    NotificationCompat.Builder b = new NotificationCompat.Builder(context);
 
-                b.setAutoCancel(true)
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setWhen(System.currentTimeMillis())
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setChannelId(NOTIFICATION_CHANNEL_ID)
-                        .setContentTitle("Book Released")
-                        .setContentText(item.getName()+" is released today!")
-                        .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND)
-                        .setContentIntent(contentIntent)
-                        .setContentInfo("Info");
+                    b.setAutoCancel(true)
+                            .setDefaults(Notification.DEFAULT_ALL)
+                            .setWhen(System.currentTimeMillis())
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setChannelId(NOTIFICATION_CHANNEL_ID)
+                            .setContentTitle("Book Released")
+                            .setContentText(item.getName() + " is released today!")
+                            .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
+                            .setContentIntent(contentIntent)
+                            .setContentInfo("Info");
 
 
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.createNotificationChannel(notificationChannel);
+                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    notificationManager.createNotificationChannel(notificationChannel);
 
-                notificationManager.notify(1, b.build());
+                    notificationManager.notify(1, b.build());
+                }
             }
         });
 
