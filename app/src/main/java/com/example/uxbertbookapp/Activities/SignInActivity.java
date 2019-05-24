@@ -1,6 +1,7 @@
 package com.example.uxbertbookapp.Activities;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.uxbertbookapp.DBManager.DBHandler;
+import com.example.uxbertbookapp.Model.User;
 import com.example.uxbertbookapp.R;
 import com.example.uxbertbookapp.SessionManager.SessionManager;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -26,9 +29,9 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
     @Password(min = 6)
     EditText ed_password;
     Button btn_signIn;
-    TextView txt_signup;
     com.mobsandgeeks.saripaar.Validator validator;
     SessionManager sessionManager;
+    DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,6 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
         ed_email=findViewById(R.id.sigin_edit_email);
         ed_password=findViewById(R.id.signIn_edit_pass);
         btn_signIn=findViewById(R.id.signIn_btn);
-        txt_signup=findViewById(R.id.signIn_signupbtn);
         sessionManager=new SessionManager(SignInActivity.this);
         validator = new com.mobsandgeeks.saripaar.Validator(this);
         validator.setValidationListener(this);
@@ -53,12 +55,7 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
 
     private void viewActions()
     {
-        txt_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,14 +92,23 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
     }
 
     public void signupClicked(View view) {
-        startActivity(new Intent(SignInActivity.this, BookListActivity.class));
+        startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
     }
 
     private void signIn()
     {
+        dbHandler=new DBHandler(SignInActivity.this);
+        User user=dbHandler.getUser(ed_email.getText().toString().trim(),ed_password.getText().toString().trim());
+       if (user!=null)
+       {
+           Toast.makeText(getApplicationContext(),"Sign in Successfull",Toast.LENGTH_LONG).show();
+           sessionManager.createSession(user.getName(),user.getPassword(),user.getEmail());
+           startActivity(new Intent(SignInActivity.this,BookListActivity.class));
 
-
-
+       }
+       else {
+           Toast.makeText(getApplicationContext(),"User not found",Toast.LENGTH_LONG).show();
+       }
     }
 
 }

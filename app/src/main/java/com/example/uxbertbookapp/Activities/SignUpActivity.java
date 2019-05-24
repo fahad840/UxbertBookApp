@@ -1,5 +1,6 @@
 package com.example.uxbertbookapp.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.uxbertbookapp.DBManager.DBHandler;
+import com.example.uxbertbookapp.Model.User;
 import com.example.uxbertbookapp.R;
 import com.example.uxbertbookapp.SessionManager.SessionManager;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -31,7 +34,7 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
     com.mobsandgeeks.saripaar.Validator validator;
     SessionManager sessionManager;
     Button signUpBtn;
-
+    DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +45,8 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
 
     }
 
-    private void initView()
-    {
-        fullNameEditText=findViewById(R.id.sigup_edit_fullName);
+    private void initView() {
+        fullNameEditText = findViewById(R.id.sigup_edit_fullName);
         emailEditText = findViewById(R.id.signUp_edit_Email);
         passwordEditText = findViewById(R.id.signUp_edit_Password);
         signUpBtn = findViewById(R.id.signUp_btn);
@@ -55,8 +57,7 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
 
     }
 
-    private void ViewActions()
-    {
+    private void ViewActions() {
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +69,7 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
     }
 
     @Override
-    public void onValidationSucceeded()
-    {
+    public void onValidationSucceeded() {
         signup();
     }
 
@@ -88,8 +88,20 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
         }
     }
 
-    private void signup()
-    {
+    private void signup() {
+
+        dbHandler = new DBHandler(SignUpActivity.this);
+        if (dbHandler.getUserCheck(emailEditText.getText().toString().trim())) {
+            Toast.makeText(getApplicationContext(), "User Already Exist", Toast.LENGTH_LONG).show();
+
+        } else {
+
+
+            dbHandler.addUser(new User(fullNameEditText.getText().toString().trim(),emailEditText.getText().toString().trim(),passwordEditText.getText().toString().trim()));
+            sessionManager.createSession(fullNameEditText.getText().toString().trim(),passwordEditText.getText().toString().trim(),emailEditText.getText().toString().trim());
+            startActivity(new Intent(SignUpActivity.this,BookListActivity.class));
+
+        }
 
 
     }
