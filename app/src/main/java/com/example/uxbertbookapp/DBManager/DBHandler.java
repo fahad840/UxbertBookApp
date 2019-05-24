@@ -37,7 +37,6 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String PASSWORD = "password";
 
 
-
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         //3rd argument to be passed is CursorFactory instance
@@ -48,12 +47,12 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_bookS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_BOOKS + "("
                 + BOOK_ID + " INTEGER PRIMARY KEY," + BOOK_NAME + " TEXT,"
-                + BOOK_AURTHOR + " TEXT," + BOOK_PAGES + " INTEGER,"+ BOOK_STATUS + " TEXT,"+ BOOK_NOTIFIABLE + " INTEGER" + ")";
+                + BOOK_AURTHOR + " TEXT," + BOOK_PAGES + " INTEGER," + BOOK_STATUS + " TEXT," + BOOK_NOTIFIABLE + " INTEGER" + ")";
         db.execSQL(CREATE_bookS_TABLE);
 
         String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + "("
                 + USER_ID + " INTEGER PRIMARY KEY," + FULL_NAME + " TEXT,"
-                + EMAIL + " TEXT,"+ PASSWORD + " TEXT" + ")";
+                + EMAIL + " TEXT," + PASSWORD + " TEXT" + ")";
         db.execSQL(CREATE_USERS_TABLE);
     }
 
@@ -68,7 +67,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // code to add the new book
-    void addBook(Book book) {
+    public void addBook(Book book) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -85,23 +84,23 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // code to get the single book
-    Book getBook(int id) {
+    public Book getBook(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_BOOKS, new String[] { BOOK_ID,
-                        BOOK_NAME, BOOK_AURTHOR,BOOK_PAGES,BOOK_STATUS,BOOK_NOTIFIABLE }, BOOK_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_BOOKS, new String[]{BOOK_ID,
+                        BOOK_NAME, BOOK_AURTHOR, BOOK_PAGES, BOOK_STATUS, BOOK_NOTIFIABLE}, BOOK_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Book book = new Book(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2),Integer.parseInt(cursor.getString(3)), cursor.getString(4),Integer.parseInt(cursor.getString(5)));
+                cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)), cursor.getString(4), Integer.parseInt(cursor.getString(5)));
         // return book
         return book;
     }
 
     // code to get all book in a list view
-    public List<Book> getAllBooks() {
+    public List<Book> getNewBooks() {
         List<Book> bookList = new ArrayList<Book>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_BOOKS;
@@ -116,6 +115,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 book.setId(Integer.parseInt(cursor.getString(0)));
                 book.setName(cursor.getString(1));
                 book.setAurthor(cursor.getString(2));
+                book.setPages(Integer.valueOf(cursor.getString(3)));
+                book.setStatus(cursor.getString(4));
+                book.setNotifiable(Integer.valueOf(cursor.getString(5)));
                 // Adding book to list
                 bookList.add(book);
             } while (cursor.moveToNext());
@@ -124,6 +126,69 @@ public class DBHandler extends SQLiteOpenHelper {
         // return book list
         return bookList;
     }
+
+
+    public List<Book> getOldBooks() {
+        List<Book> bookList = new ArrayList<Book>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_BOOKS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Book book = new Book();
+                book.setId(Integer.parseInt(cursor.getString(0)));
+                book.setName(cursor.getString(1));
+                book.setAurthor(cursor.getString(2));
+                book.setPages(Integer.valueOf(cursor.getString(3)));
+                book.setStatus(cursor.getString(4));
+                book.setNotifiable(Integer.valueOf(cursor.getString(5)));
+                // Adding book to list
+                bookList.add(book);
+            } while (cursor.moveToNext());
+        }
+
+        // return book list
+        return bookList;
+    }
+
+
+    public List<Book> getUpcomingBooks() {
+        List<Book> bookList = new ArrayList<Book>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_BOOKS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_BOOKS, new String[]{BOOK_ID,
+                        BOOK_NAME, BOOK_AURTHOR, BOOK_PAGES, BOOK_STATUS, BOOK_NOTIFIABLE}, BOOK_STATUS + "=?",
+                new String[]{"upcoming"}, null, null, null, null);
+
+        // looping through all rows and adding to list
+        if (cursor.getCount() <= 0) {
+            return null;
+        } else {
+            if (cursor.moveToFirst()) {
+                do {
+                    Book book = new Book();
+                    book.setId(Integer.parseInt(cursor.getString(0)));
+                    book.setName(cursor.getString(1));
+                    book.setAurthor(cursor.getString(2));
+                    book.setPages(Integer.valueOf(cursor.getString(3)));
+                    book.setStatus(cursor.getString(4));
+                    book.setNotifiable(Integer.valueOf(cursor.getString(5)));
+                    // Adding book to list
+                    bookList.add(book);
+                } while (cursor.moveToNext());
+            }
+        }
+
+        // return book list
+        return bookList;
+    }
+
 
     // code to update the single book
     public int updatebook(Book book) {
@@ -138,14 +203,14 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // updating row
         return db.update(TABLE_BOOKS, values, BOOK_ID + " = ?",
-                new String[] { String.valueOf(book.getId()) });
+                new String[]{String.valueOf(book.getId())});
     }
 
     // Deleting single Book
     public void deletebook(Book book) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_BOOKS, BOOK_ID + " = ?",
-                new String[] { String.valueOf(book.getId()) });
+                new String[]{String.valueOf(book.getId())});
         db.close();
     }
 
@@ -176,17 +241,15 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // code to get the single user
-    public User getUser(String email,String password) {
+    public User getUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_USERS, new String[] { USER_ID,
-                        FULL_NAME, EMAIL,PASSWORD }, EMAIL + "=?"+ " AND " + PASSWORD + "=?",
-                new String[] { email,password }, null, null, null, null);
-        if (cursor.getCount() <= 0)
-        {
+        Cursor cursor = db.query(TABLE_USERS, new String[]{USER_ID,
+                        FULL_NAME, EMAIL, PASSWORD}, EMAIL + "=?" + " AND " + PASSWORD + "=?",
+                new String[]{email, password}, null, null, null, null);
+        if (cursor.getCount() <= 0) {
             return null;
-        }
-        else {
+        } else {
             cursor.moveToFirst();
 
             User user = new User(Integer.valueOf(cursor.getString(0)),
@@ -199,10 +262,10 @@ public class DBHandler extends SQLiteOpenHelper {
     public boolean getUserCheck(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_USERS, new String[] { USER_ID,
-                        FULL_NAME, EMAIL,PASSWORD }, EMAIL + "=?",
-                new String[] { email }, null, null, null, null);
-        if(cursor.getCount() <= 0){
+        Cursor cursor = db.query(TABLE_USERS, new String[]{USER_ID,
+                        FULL_NAME, EMAIL, PASSWORD}, EMAIL + "=?",
+                new String[]{email}, null, null, null, null);
+        if (cursor.getCount() <= 0) {
             cursor.close();
             return false;
         }
@@ -210,7 +273,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return true;
         // return user
     }
-
 
 
 }
