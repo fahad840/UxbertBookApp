@@ -92,7 +92,10 @@ public class EditBookActivity extends BaseSkeletonActivity implements com.mobsan
                                 dbHandler.deletebook(book);
                                 Toast.makeText(getApplicationContext(),"Book is Deleted",Toast.LENGTH_LONG).show();
                                 finish();
-                                startActivity(new Intent(EditBookActivity.this,BookListActivity.class));
+                                Intent intent=new Intent(EditBookActivity.this,BookListActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                                startActivity(intent);
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
 

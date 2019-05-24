@@ -99,8 +99,10 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
 
             dbHandler.addUser(new User(fullNameEditText.getText().toString().trim(),emailEditText.getText().toString().trim(),passwordEditText.getText().toString().trim()));
             sessionManager.createSession(fullNameEditText.getText().toString().trim(),passwordEditText.getText().toString().trim(),emailEditText.getText().toString().trim());
-            startActivity(new Intent(SignUpActivity.this,BookListActivity.class));
+            Intent intent=new Intent(SignUpActivity.this,BookListActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+            startActivity(intent);
         }
 
 

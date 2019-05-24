@@ -51,6 +51,16 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
         validator = new com.mobsandgeeks.saripaar.Validator(this);
         validator.setValidationListener(this);
 
+        if (sessionManager.isLoggedIn())
+        {
+
+            Intent intent=new Intent(SignInActivity.this,BookListActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            startActivity(intent);
+
+        }
+
     }
 
     private void viewActions()

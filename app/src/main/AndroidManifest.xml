@@ -9,11 +9,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.EditBookActivity"></activity>
-        <activity android:name=".Activities.CreateBookActivity" />
-        <activity android:name=".Activities.SignUpActivity" />
-        <activity android:name=".Activities.BookListActivity" />
-        <activity android:name=".Activities.SignInActivity">
+        <activity android:name=".Activities.EditBookActivity"
+            android:label="Edit Book"
+
+            android:parentActivityName=".Activities.BookListActivity"
+            >
+        </activity>
+        <activity android:name=".Activities.CreateBookActivity"
+            android:label="New Book"
+            android:parentActivityName=".Activities.BookListActivity"
+
+            />
+        <activity android:name=".Activities.SignUpActivity"
+            android:label="Sign Up"
+
+            android:parentActivityName=".Activities.SignInActivity"
+
+            />
+        <activity android:name=".Activities.BookListActivity"
+            android:label="Book List"
+
+            />
+        <activity android:name=".Activities.SignInActivity"
+            android:label="Uxbert Book App"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
