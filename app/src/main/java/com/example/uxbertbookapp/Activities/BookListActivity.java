@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import com.example.uxbertbookapp.Fragments.NewFragment;
 import com.example.uxbertbookapp.Fragments.OldFragment;
 import com.example.uxbertbookapp.Fragments.UpcomingFragment;
 import com.example.uxbertbookapp.R;
+import com.example.uxbertbookapp.SessionManager.SessionManager;
 
 public class BookListActivity extends AppCompatActivity {
 
@@ -24,6 +26,7 @@ public class BookListActivity extends AppCompatActivity {
     final Fragment fragment3 = new UpcomingFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
+    SessionManager sessionManager;
 
 
     @Override
@@ -36,6 +39,7 @@ public class BookListActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
         FloatingActionButton fab = findViewById(R.id.fab);
+        sessionManager=new SessionManager(BookListActivity.this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -72,5 +76,24 @@ public class BookListActivity extends AppCompatActivity {
                 startActivity(new Intent(BookListActivity.this,CreateBookActivity.class));
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.button_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.mybutton) {
+            sessionManager.logout();
+
+            // do something here
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
