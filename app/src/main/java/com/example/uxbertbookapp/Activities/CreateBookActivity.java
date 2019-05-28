@@ -20,6 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.List;
 
+//Activity that creates new book in SQLite database.
 public class CreateBookActivity extends BaseSkeletonActivity implements com.mobsandgeeks.saripaar.Validator.ValidationListener {
     @NotEmpty
     EditText ed_bookname;
@@ -41,6 +42,7 @@ public class CreateBookActivity extends BaseSkeletonActivity implements com.mobs
         viewActions();
     }
 
+    //intialize all the views
     private void initView()
     {
         ed_bookname=findViewById(R.id.create_edit_bookname);
@@ -54,6 +56,7 @@ public class CreateBookActivity extends BaseSkeletonActivity implements com.mobs
 
     }
 
+    //Put action or click listeners on all references.
     private void viewActions()
     {
         createbookbtn.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +68,15 @@ public class CreateBookActivity extends BaseSkeletonActivity implements com.mobs
 
     }
 
+    //Validate the book form data.
     @Override
     public void onValidationSucceeded() {
         createbook();
 
     }
 
+
+    //If Validation fail then give error.
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
@@ -86,6 +92,7 @@ public class CreateBookActivity extends BaseSkeletonActivity implements com.mobs
         }
     }
 
+    //Create new book in sqlite database and move back to book list.
     private void createbook()
     {
         if (checknotify.isChecked())

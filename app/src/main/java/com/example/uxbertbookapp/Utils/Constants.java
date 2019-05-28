@@ -1,5 +1,6 @@
 package com.example.uxbertbookapp.Utils;
 
+//Constants class.
 public class Constants {
 
     public class KEYS{

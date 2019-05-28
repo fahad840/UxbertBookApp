@@ -44,6 +44,7 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
         ViewActions();
 
     }
+    //intialize all the views
 
     private void initView() {
         fullNameEditText = findViewById(R.id.sigup_edit_fullName);
@@ -56,6 +57,7 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
 
 
     }
+    //Put action or click listeners on all references.
 
     private void ViewActions() {
 
@@ -68,10 +70,13 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
 
     }
 
+    //Validate the data of user.
     @Override
     public void onValidationSucceeded() {
         signup();
     }
+
+    //If Validation fail then give error.
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
@@ -88,6 +93,7 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
         }
     }
 
+    //Create new user in the database and check if Already exisit or not and move to BookList Activity.
     private void signup() {
 
         dbHandler = new DBHandler(SignUpActivity.this);
@@ -108,6 +114,7 @@ public class SignUpActivity extends BaseSkeletonActivity implements com.mobsandg
 
     }
 
+    //If already have an account move back to signin activity.
     public void signinclicked(View view) {
         finish();
     }

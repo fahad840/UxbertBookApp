@@ -1,5 +1,5 @@
 package com.example.uxbertbookapp.Model;
-
+//User data
 public class User {
     int id;
     String name;
@@ -7,12 +7,14 @@ public class User {
     String password;
 
 
+    //Constructor for user data
     public User(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
     }
+    //Constructor for user data
 
     public User(String name, String email, String password) {
         this.name = name;
@@ -20,6 +22,7 @@ public class User {
         this.password = password;
     }
 
+    //Getter and Setters
     public int getId() {
         return id;
     }

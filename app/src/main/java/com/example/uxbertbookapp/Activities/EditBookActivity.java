@@ -20,6 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.List;
 
+//Edit book page so you can update and delete the book
 public class EditBookActivity extends BaseSkeletonActivity implements com.mobsandgeeks.saripaar.Validator.ValidationListener {
     @NotEmpty
     EditText ed_bookname;
@@ -41,6 +42,8 @@ public class EditBookActivity extends BaseSkeletonActivity implements com.mobsan
         initView();
         viewActions();
     }
+
+    //intialize all the views
 
     private void initView()
     {
@@ -67,9 +70,11 @@ public class EditBookActivity extends BaseSkeletonActivity implements com.mobsan
             checknotify.setChecked(false);
         }
     }
+    //Put action or click listeners on all references.
 
     private void viewActions()
     {
+        //Update button to Validate the data in the form.
         editbookbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +82,7 @@ public class EditBookActivity extends BaseSkeletonActivity implements com.mobsan
             }
         });
 
+        //delete button to delete the book from SQLite database and move back to Book List.
         deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,12 +108,14 @@ public class EditBookActivity extends BaseSkeletonActivity implements com.mobsan
             }
         });
     }
+    //Validate the book form data.
 
     @Override
     public void onValidationSucceeded() {
         editbook();
 
     }
+    //If Validation fail then give error.
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
@@ -124,6 +132,7 @@ public class EditBookActivity extends BaseSkeletonActivity implements com.mobsan
         }
     }
 
+    //Update book in database and move back to booklist activity.
     private void editbook()
     {
         if (checknotify.isChecked())

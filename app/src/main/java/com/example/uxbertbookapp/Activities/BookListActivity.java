@@ -21,11 +21,14 @@ import com.example.uxbertbookapp.SessionManager.SessionManager;
 
 public class BookListActivity extends AppCompatActivity {
 
+    // All the references of the fragments
     final Fragment fragment1 = new NewFragment();
     final Fragment fragment2 = new OldFragment();
     final Fragment fragment3 = new UpcomingFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
+
+    //session manager to create or get session.
     SessionManager sessionManager;
 
 
@@ -33,30 +36,38 @@ public class BookListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+        //show home fragment and hide the others.
         fm.beginTransaction().add(R.id.container, fragment3, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.container, fragment2, "2").hide(fragment2).commit();
         fm.beginTransaction().add(R.id.container,fragment1, "1").commit();
+        // reference for bottom naviagtion.
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
         FloatingActionButton fab = findViewById(R.id.fab);
         sessionManager=new SessionManager(BookListActivity.this);
 
+        //click listeners for bottom navigation
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_new:
+                                //show new book fragment
                                 fm.beginTransaction().hide(active).show(fragment1).commit();
                                 active = fragment1;
 
                                 return  true;
                             case R.id.action_old:
+
+                                //show old book fragment
+
                                 fm.beginTransaction().hide(active).show(fragment2).commit();
                                 active = fragment2;
                                 return  true;
 
                             case R.id.action_upcoming:
+                                //show upcoming or not released book fragment
 
                                 fm.beginTransaction().hide(active).show(fragment3).commit();
                                 active = fragment3;
@@ -73,6 +84,7 @@ public class BookListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //open activity to create new book
                 startActivity(new Intent(BookListActivity.this,CreateBookActivity.class));
             }
         });
@@ -88,11 +100,12 @@ public class BookListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        //handle logout button at top
         if (id == R.id.mybutton) {
+
+            //logout the session to create new user or sign in with different account.
             sessionManager.logout();
 
-            // do something here
         }
         return super.onOptionsItemSelected(item);
     }

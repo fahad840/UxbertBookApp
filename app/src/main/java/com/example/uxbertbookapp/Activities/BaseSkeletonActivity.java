@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 
+//Skeleton Activity for all app.
 
 public class BaseSkeletonActivity extends AppCompatActivity {
     private boolean contentViewSet = false;
@@ -23,6 +24,7 @@ public class BaseSkeletonActivity extends AppCompatActivity {
         }
     }
 
+    // Progress bar which will show when doing any background task.
 
     public final void showProgressDialog(){
         showProgressDialog("Loading", "Please Wait");
@@ -33,6 +35,7 @@ public class BaseSkeletonActivity extends AppCompatActivity {
         super.onStop();
         hideProgressDialog();
     }
+    // Progress bar which will hide when background task is completed.
 
     public final void hideProgressDialog(){
         if(progressDialog!=null && progressDialog.isShowing()){

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+//Fragment for new Book in database.
 public class NewFragment extends Fragment {
 
     private BookAdapter bookAdapter;
@@ -58,6 +60,7 @@ public class NewFragment extends Fragment {
         return rootView;
     }
 
+    //get new books from db which are released and update the listview.
     private void getBooks()
     {
         dbHandler=new DBHandler(getActivity());

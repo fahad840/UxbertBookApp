@@ -26,7 +26,7 @@ import com.example.uxbertbookapp.R;
 
 import java.util.ArrayList;
 
-
+//Adapter that connect book data with the listview in the fragment.
 public class BookAdapter extends BaseAdapter {
 
     private Context context;
@@ -39,22 +39,25 @@ public class BookAdapter extends BaseAdapter {
 
     }
 
+    //Adapter methods.
     @Override
     public int getCount() {
         return list.size();
     }
+    //Adapter methods.
 
     @Override
     public Object getItem(int position) {
         return list.get(position);
     }
+    //Adapter methods.
 
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-
+    //Initlize the view of the arraylist data one by one in the listview.
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -85,13 +88,12 @@ public class BookAdapter extends BaseAdapter {
         {
             holder.releasebtn.setVisibility(View.VISIBLE);
         }
-
-
-
+        //Inilize the name aurthor name and pages of the book in the listview.
         holder.bookname.setText(item.getName());
         holder.bookaurthor.setText(item.getAurthor());
         holder.bookPages.setText(String.valueOf(item.getPages()));
 
+        //Click listener on the cardview to move it to Edit Book List.
         holder.cardView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
@@ -101,6 +103,7 @@ public class BookAdapter extends BaseAdapter {
           }
         });
 
+        //Click Release button to release the book and make it as new book and show notfication if it is marked and notified.
         holder.releasebtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -109,11 +112,12 @@ public class BookAdapter extends BaseAdapter {
                 item.setStatus("new");
                 dbHandler.relaseBook(item);
                 context.startActivity(new Intent(context,BookListActivity.class));
+                //Check if book is notifiable
                 if (item.getNotifiable() == 1) {
                     final String NOTIFICATION_CHANNEL_ID = "4565";
-//Notification Channel
+                    //Notification Channel
                     CharSequence channelName = "Uxbert";
-                    int importance = NotificationManager.IMPORTANCE_LOW;
+                    int importance = NotificationManager.IMPORTANCE_HIGH;
                     NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "any", importance);
                     notificationChannel.enableLights(true);
                     notificationChannel.setLightColor(Color.RED);

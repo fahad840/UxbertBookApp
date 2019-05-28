@@ -41,6 +41,7 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
         viewActions();
 
     }
+    //intialize all the views
 
     private void initView()
     {
@@ -62,10 +63,12 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
         }
 
     }
+    //Put action or click listeners on all references.
 
     private void viewActions()
     {
 
+        //Sign in button to Validate the data in Signin form.
 
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,11 +82,14 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
 
 
     }
+    //Validate the User data.
 
     @Override
     public void onValidationSucceeded() {
         signIn();
     }
+
+    //If Validation fail then give error.
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
@@ -101,10 +107,12 @@ public class SignInActivity extends BaseSkeletonActivity implements com.mobsandg
 
     }
 
+    //Click event for signup button to move it to Signup page.
     public void signupClicked(View view) {
         startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
     }
 
+    //Check user in Sqlite database to verify and create new session and move to BookList Activity if user exisit.
     private void signIn()
     {
         dbHandler=new DBHandler(SignInActivity.this);

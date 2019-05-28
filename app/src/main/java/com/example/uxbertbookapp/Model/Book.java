@@ -1,5 +1,7 @@
 package com.example.uxbertbookapp.Model;
 
+//Model of the book which contain book name aurthor and pages.
+
 public class Book {
     int id;
     String name;
@@ -8,9 +10,11 @@ public class Book {
     String status;
     int notifiable;
 
+    //Empty Constructor
     public Book() {
     }
 
+    //Constructor with data.
     public Book(int id, String name, String aurthor, int pages, String status, int notifiable) {
         this.id = id;
         this.name = name;
@@ -19,6 +23,7 @@ public class Book {
         this.status = status;
         this.notifiable = notifiable;
     }
+    //Constructor with data.
 
     public Book(String name, String aurthor, int pages, String status, int notifiable) {
         this.name = name;
@@ -28,6 +33,7 @@ public class Book {
         this.notifiable = notifiable;
     }
 
+    //getter and setters
     public int getId() {
         return id;
     }

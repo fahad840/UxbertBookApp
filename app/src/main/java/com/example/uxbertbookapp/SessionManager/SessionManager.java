@@ -8,7 +8,7 @@ import com.example.uxbertbookapp.Activities.SignInActivity;
 import com.example.uxbertbookapp.Utils.Constants;
 
 
-
+//Session manager to manage the sessions in Preferences
 public class SessionManager {
 
 
@@ -22,7 +22,7 @@ public class SessionManager {
     private static final String IS_LOGGEDIN = "isLoggedIn";
 
 
-
+    //Constructor to create new session.
     public SessionManager(Context context){
         this._context = context;
         mypref = _context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
@@ -32,7 +32,7 @@ public class SessionManager {
     }
 
 
-
+    //Create new Session and save it in preferences
     public void createSession(String name,String password,String email) {
         editor.putString(Constants.KEYS.email,email);
         editor.putString(Constants.KEYS.password,password);
@@ -44,7 +44,7 @@ public class SessionManager {
     }
 
 
-
+    //Logout the app and remove the session from preference and move back to signin page.
     public void logout(){
         editor.clear();
         editor.commit();
@@ -54,9 +54,11 @@ public class SessionManager {
         _context.startActivity(showLogin);
     }
 
+    //Check is user logged in the app
     public boolean isLoggedIn(){
         return mypref.getBoolean(IS_LOGGEDIN,false);
     }
+
 
 
     public String getEmail() {

@@ -11,7 +11,7 @@ import com.example.uxbertbookapp.Model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//SQLite Database to handle all the calls in mobile database.
 public class DBHandler extends SQLiteOpenHelper {
 
 

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+//Upcoming books which will show the books which are not released.
 public class UpcomingFragment extends Fragment {
 
     private BookAdapter bookAdapter;
@@ -56,7 +58,7 @@ public class UpcomingFragment extends Fragment {
         return rootView;
     }
 
-
+    //get upcoming Books from database which are not released yet.
     private void getBooks()
     {
         dbHandler=new DBHandler(getActivity());
